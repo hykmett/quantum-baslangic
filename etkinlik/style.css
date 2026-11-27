@@ -1,0 +1,46 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, sans-serif;
+  background: #10131a;
+  color: #f2f5fb;
+  --muted: #aab6c9;
+  --accent: #a8ecd1;
+  --line: #303a49;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+.shell { width: min(1080px, calc(100% - 2rem)); margin-inline: auto; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.3rem; }
+.brand { display: flex; align-items: center; gap: .65rem; font-weight: 750; }
+.mark { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .6rem; background: var(--accent); color: #102820; }
+.network { border: 1px solid var(--line); border-radius: 2rem; padding: .45rem .8rem; color: var(--muted); font-size: .9rem; }
+.hero { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 2rem; padding: clamp(1.5rem, 5vw, 3.4rem); border: 1px solid var(--line); border-radius: 1.25rem; background: linear-gradient(120deg, #19322f, #1a2234 70%); }
+.kicker { margin: 0; color: var(--accent); font-weight: 650; }
+h1 { margin: .35rem 0 1rem; font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -.055em; }
+h2 { margin: 0 0 1rem; font-size: 1.25rem; }
+a { color: var(--accent); text-underline-offset: .22em; }
+dl { margin: 0; }
+dt, #wallet-status, #status, label { color: var(--muted); }
+dd { margin: .3rem 0 0; overflow-wrap: anywhere; }
+.metrics { display: flex; gap: .8rem; flex-wrap: wrap; }
+.metrics div { min-width: 8rem; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: .8rem; background: #151d2a; }
+.metrics dd { font-size: 1.8rem; font-weight: 750; }
+.workspace { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 1rem; margin-top: 1rem; }
+.actions { display: grid; gap: 1rem; }
+.card { border: 1px solid var(--line); border-radius: 1rem; background: #181e29; padding: clamp(1rem, 3vw, 1.6rem); min-width: 0; }
+.details { display: grid; gap: .9rem; }
+.details div { border-top: 1px solid var(--line); padding-top: .65rem; }
+#account { font-family: ui-monospace, monospace; }
+form { display: grid; gap: .65rem; }
+input, button { font: inherit; border-radius: .55rem; padding: .7rem .85rem; }
+input { width: 100%; border: 1px solid var(--line); background: #10151f; color: inherit; }
+button { justify-self: start; border: 0; background: var(--accent); color: #112820; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .48; cursor: default; }
+.secondary { background: #263346; color: #f2f5fb; }
+.hint, #read-status { color: var(--muted); margin: 0; }
+.hint:empty, #read-status:empty { display: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.feedback p { margin: 0 0 .45rem; overflow-wrap: anywhere; }
+footer { padding-block: 1.35rem; }
+@media (max-width: 700px) { .workspace { grid-template-columns: 1fr; } }

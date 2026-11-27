@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Eğitim Cüzdanı</title>
+  <link rel="stylesheet" href="wallet.css">
+  <script defer src="node_modules/ethers/dist/ethers.umd.min.js"></script>
+  <script defer src="wallet.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Quantum Team · İP 12</p>
+      <h1>Eğitim cüzdanı</h1>
+      <p>Rastgele 16 bayttan Ethereum adresine giden adımları incele. Bu cüzdanı eğitim için kullan.</p>
+      <button id="generate" type="button">Yeni eğitim cüzdanı oluştur</button>
+      <p id="status" role="status">Bir cüzdan oluşturduğunda sonuçlar aşağıda görünecek.</p>
+    </header>
+    <ol id="steps" class="steps" hidden></ol>
+    <template id="step">
+      <li>
+        <h2></h2>
+        <p></p>
+        <code class="call"></code>
+        <button class="toggle" type="button" aria-expanded="false" hidden>Göster</button>
+        <output></output>
+      </li>
+    </template>
+  </main>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' https://ethereum-sepolia-rpc.publicnode.com; base-uri 'none'; form-action 'none'">
+  <title>Quantum · Etkinlik kaydı</title>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="../node_modules/ethers/dist/ethers.umd.min.js"></script>
+  <script defer src="./config.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <header class="shell topbar">
+    <span class="brand"><span class="mark" aria-hidden="true">Q</span> Quantum</span>
+    <span class="network">Ethereum Sepolia</span>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="event-name">
+      <div>
+        <p class="kicker">Etkinlik kaydı</p>
+        <h1 id="event-name">Etkinlik yükleniyor…</h1>
+        <a id="contract-link" target="_blank" rel="noopener noreferrer">Sözleşmeyi Etherscan’de aç</a>
+      </div>
+      <dl class="metrics">
+        <div><dt>Kapasite</dt><dd id="capacity">—</dd></div>
+        <div><dt>Toplam kayıt</dt><dd id="count">—</dd></div>
+      </dl>
+    </section>
+    <div class="workspace">
+      <section class="card">
+        <h2>Cüzdan</h2>
+        <button id="connect" type="button" disabled>Cüzdan bağla</button>
+        <button id="refresh" type="button" class="secondary" disabled>Bilgileri yenile</button>
+        <p id="wallet-status" role="status">MetaMask bağlantısı bekleniyor.</p>
+        <p id="read-status" role="status"></p>
+        <dl class="details">
+          <div><dt>Adres</dt><dd id="account">—</dd></div>
+          <div><dt>Takma ad</dt><dd id="nickname">—</dd></div>
+          <div><dt>Kayıt durumu</dt><dd id="registration">—</dd></div>
+          <div><dt>Giriş durumu</dt><dd id="attendance">—</dd></div>
+        </dl>
+      </section>
+      <div class="actions">
+        <section class="card">
+          <h2>Etkinliğe katıl</h2>
+          <form id="register">
+            <label for="nickname-input">Takma ad</label>
+            <input id="nickname-input" placeholder="Ör. mavi" required>
+            <button id="register-button" disabled>Kayıt ol</button>
+            <p id="registration-hint" class="hint"></p>
+          </form>
+        </section>
+        <section class="card" id="staff" hidden>
+          <h2>Katılımcı girişi</h2>
+          <form id="check-in">
+            <label for="participant">Katılımcı adresi</label>
+            <input id="participant" placeholder="0x…" spellcheck="false" required>
+            <button id="check-in-button" disabled>Girişi onayla</button>
+          </form>
+        </section>
+        <p id="staff-hint" class="hint" hidden>Giriş onayını yalnızca görevli hesap verebilir.</p>
+        <div class="feedback">
+          <p id="status" role="status"></p>
+          <a id="transaction-link" target="_blank" rel="noopener noreferrer" hidden>İşlemi Etherscan’de aç</a>
+        </div>
+      </div>
+    </div>
+    <footer><a href="../index.html">İP-12 eğitim cüzdanı</a></footer>
+  </main>
+</body>
+</html>
