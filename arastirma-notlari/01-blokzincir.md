@@ -90,6 +90,39 @@ Eğer projemde veriyi yazacak birden fazla ve birbirine güvenmeyen taraflar yok
 
 ## İP-2
 
+## D · Kendi Etkinlik Sözleşmeni Geliştir
 
+### İP-20 · İlk Etkinlik Kaydını Oluştur
 
+[EtkinlikKaydi.sol](../src/EtkinlikKaydi.sol) tek bir etkinliği temsil ediyor. Etkinliğin adı **Quantum Atölyesi**. Takma adlar, cüzdan adresini metne eşleyen `takmaAdlar` mapping’inde sözleşme durumuna yazılıyor. `kaydol` fonksiyonu adres parametresi almıyor. Yazılacak kaydın anahtarı olarak `msg.sender`, yani çağrıyı yapan adres kullanılıyor. `public` tanımı sayesinde Solidity, herhangi bir adresin kaydını okumak için `takmaAdlar(adres)` fonksiyonunu otomatik oluşturuyor.
 
+#### Remix VM deneyi
+
+İlk yerel hesabın (`…eddC4`) `kaydol(string)` işlemi Remix VM’de 2. blokta başarıyla tamamlandı. Kaydın içeriğini `takmaAdlar` ile ayrıca okuyacağım.
+
+Sözleşmeyi Remix’te derledim ve Remix VM’de dağıttım. Terminalde `EtkinlikKaydi.(constructor)` işlemi için **Transaction mined and execution completed** durumunu gördüm. Yerel sözleşme adresi `0xd9145CCE52D386f254917e481eB44e9943F39138`.
+
+1. `EtkinlikKaydi.sol` dosyasını Remix’te aç ve Solidity Compiler ile derle.
+2. **Deploy & Run Transactions** panelinde **Remix VM** ortamını ve **EtkinlikKaydi** sözleşmesini seç. **Deploy** ile yerel bir örnek oluştur.
+3. İlk yerel hesabın adresini kopyala ve `kaydol` ile `mavi` takma adını yaz. Aynı sözleşme örneğinde ikinci yerel hesaba geç, adresini kopyala ve `kaydol` ile `yesil` takma adını yaz.
+4. Aynı sözleşmede `takmaAdlar` ile iki adresi ayrı ayrı sorguladım. Remix’in **decoded output** alanında ilk yerel hesap (`…eddC4`) için `mavi`, ikinci yerel hesap (`…35cb2`) için `yesil` döndüğünü doğruladım. Böylece iki takma adın kendi adresleri altında saklandığını gördüm.
+
+**Benim yorumum.** İlk sürüm boş veya çok uzun takma adlara izin veriyor. Farklı adresler aynı takma adı kullanabiliyor. Bir adres yeniden kaydolursa önceki takma adın üzerine yazılıyor. Boş metin kaydı ile hiç kayıt yapılmamış bir adres okumada aynı sonucu veriyor.
+
+### İP-21 · Kapasite ve Kayıt Kurallarını Ekle
+
+[EtkinlikKaydiV2.sol](../src/EtkinlikKaydiV2.sol) boş takma adı ve bir adresin ikinci kaydını reddeder. Kapasite üçtür. Toplamı `kayitSayisi()` ile okuyabilirim. Sözleşme, takma adı yazmadan ve sayacı artırmadan önce tüm kuralları kontrol eder. İP-20 sürümü [EtkinlikKaydi.sol](../src/EtkinlikKaydi.sol) dosyasında duruyor.
+
+#### Remix VM deneyi
+
+`EtkinlikKaydiV2.sol` dosyasını Remix’te derleyip **Remix VM** ortamında dağıttım. Kabul ve ret sonuçlarını aşağıda kaydettim.
+
+| Deneme | Beklenen sonuç | Remix VM gözlemi |
+| --- | --- | --- |
+| İlk yerel hesapla `mavi` | Kabul, toplam 1 | Kabul. `kayitSayisi()` 1 döndürdü. |
+| İlk hesapla tekrar `turkuaz` | Ret, toplam 1 | Remix VM işlemi `Bu adres zaten kayitli` hatasıyla geri aldı. Ardından `kayitSayisi()` yine 1 döndürdü. |
+| İkinci yerel hesapla boş metin | Ret, toplam 1 | İşlem `Takma ad bos olamaz` hatasıyla geri alındı. İşlem geri alındığı için sayaç 1 kaldı. |
+| İkinci ve üçüncü geçerli kayıt | Kabul, toplam 3 | Son sayaç okuması 3 döndürdü. |
+| Farklı bir hesapla `sari` | Ret, toplam 3 | `…cabaB` hesabının işlemi `Etkinlik kapasitesi dolu` hatasıyla geri alındı. Ardından `kayitSayisi()` 3 döndürdü. |
+
+**Benim yorumum.** Bir kişi birden fazla cüzdan adresi oluşturabilir ve her adresle ayrı kayıt yapabilir. Sözleşme çağrıyı yapan adresi bildiği için kapasite üç farklı adresle sınırlıdır. Gerçek kişi sayısını doğrulamak için ayrıca kimlik doğrulaması gerekir.
